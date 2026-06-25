@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
+// Premium bold italic Google Font for the special message
+const fontLink = document.createElement('link');
+fontLink.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&display=swap';
+fontLink.rel = 'stylesheet';
+document.head.appendChild(fontLink);
+
 const SpecialMessage = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.3 });
   const [text, setText] = useState('');
@@ -41,8 +47,19 @@ const SpecialMessage = () => {
           💌
         </div>
         
-        <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', marginBottom: '2rem', color: 'var(--color-primary)' }}>
-          A Special Message For You
+        <h2 style={{ 
+          fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', 
+          marginBottom: '2rem', 
+          fontFamily: "'Cormorant Garamond', serif",
+          fontStyle: 'italic',
+          fontWeight: 700,
+          background: 'linear-gradient(135deg, #ff4b82, #ffd700, #ff4b82)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          letterSpacing: '1px'
+        }}>
+          💌 A Special Message For You
         </h2>
         
         <div style={{ 
@@ -52,19 +69,26 @@ const SpecialMessage = () => {
           justifyContent: 'center' 
         }}>
           <p style={{ 
-            fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', 
-            lineHeight: 1.8, 
-            fontFamily: 'var(--font-handwriting)',
-            color: 'var(--color-text-light)',
-            textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+            fontSize: 'clamp(1.3rem, 3vw, 2rem)', 
+            lineHeight: 2,
+            fontFamily: "'Cormorant Garamond', serif",
+            fontStyle: 'italic',
+            fontWeight: 600,
+            color: '#fff',
+            textShadow: '0 0 18px rgba(255, 75, 130, 0.45), 0 2px 8px rgba(0,0,0,0.5)',
             whiteSpace: 'pre-wrap',
-            textAlign: 'left'
+            textAlign: 'left',
+            letterSpacing: '0.3px',
+            paddingLeft: '12px',
+            paddingTop: '8px',
+            borderLeft: '3px solid var(--color-primary)',
+            marginLeft: '4px'
           }}>
             {text}
             <motion.span 
               animate={{ opacity: [1, 0] }} 
               transition={{ repeat: Infinity, duration: 0.8 }}
-              style={{ borderRight: '2px solid var(--color-primary)', marginLeft: '2px' }}
+              style={{ borderRight: '3px solid var(--color-primary)', marginLeft: '3px' }}
             >
               &nbsp;
             </motion.span>

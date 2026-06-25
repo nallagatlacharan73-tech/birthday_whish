@@ -44,7 +44,7 @@ const MusicPlayer = () => {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', fontWeight: '500' }}>Background Music</span>
         <span style={{ fontSize: '0.9rem', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', gap: '5px' }}>
-          <Music size={14} /> Happy Birthday Melody
+          <Music size={14} /> Gaaju Bomma 🎵
         </span>
       </div>
       
