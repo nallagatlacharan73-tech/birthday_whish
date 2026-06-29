@@ -11,16 +11,18 @@ import CartoonCharacters from "./components/CartoonCharacters";
 function App() {
   const [loading, setLoading] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showBanner, setShowBanner] = useState(true);
 
   useEffect(() => {
-    const toggleScrollButton = () => {
+    const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);
+      setShowBanner(window.scrollY < 120);
     };
 
-    window.addEventListener("scroll", toggleScrollButton);
-    toggleScrollButton();
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
 
-    return () => window.removeEventListener("scroll", toggleScrollButton);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleStartSurprise = () => {
@@ -40,10 +42,16 @@ function App() {
         <LoadingScreen onComplete={() => setLoading(false)} />
       ) : (
         <>
-          <div className="celebration-banner" role="status" aria-live="polite">
-            <span>✨ Today is your day ✨</span>
-            <span>Let this page glow just for you</span>
-          </div>
+          {showBanner && (
+            <div
+              className="celebration-banner"
+              role="status"
+              aria-live="polite"
+            >
+              <span>✨ Today is your day ✨</span>
+              <span>Let this page glow just for you</span>
+            </div>
+          )}
 
           <div className="sparkle-layer" aria-hidden="true">
             {Array.from({ length: 10 }).map((_, index) => (
