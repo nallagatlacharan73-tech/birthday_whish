@@ -1,14 +1,26 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { X, Camera } from "lucide-react";
+import { X, Camera, ArrowLeft, ArrowRight } from "lucide-react";
 import { birthdayContent } from "../content";
 
 const MemoryGallery = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const { gallery } = birthdayContent;
   const photos = gallery.photos;
+  const selectedPhoto = selectedIndex !== null ? photos[selectedIndex] : null;
+
+  const openPhoto = (index) => setSelectedIndex(index);
+  const closePhoto = () => setSelectedIndex(null);
+  const showPrevious = () =>
+    setSelectedIndex((current) =>
+      current === 0 ? photos.length - 1 : current - 1,
+    );
+  const showNext = () =>
+    setSelectedIndex((current) =>
+      current === photos.length - 1 ? 0 : current + 1,
+    );
 
   return (
     <section
@@ -56,7 +68,7 @@ const MemoryGallery = () => {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.15 }}
               whileHover={{ scale: 1.03, zIndex: 10 }}
-              onClick={() => setSelectedPhoto(photo)}
+              onClick={() => openPhoto(index)}
               style={{
                 height: "380px",
                 borderRadius: "20px",
@@ -133,7 +145,7 @@ const MemoryGallery = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedPhoto(null)}
+            onClick={closePhoto}
             style={{
               position: "fixed",
               inset: 0,
@@ -147,7 +159,7 @@ const MemoryGallery = () => {
             }}
           >
             <button
-              onClick={() => setSelectedPhoto(null)}
+              onClick={closePhoto}
               style={{
                 position: "absolute",
                 top: "24px",
@@ -166,6 +178,57 @@ const MemoryGallery = () => {
             >
               <X size={22} />
             </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                showPrevious();
+              }}
+              style={{
+                position: "absolute",
+                left: "24px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                color: "white",
+                cursor: "pointer",
+                borderRadius: "50%",
+                width: "48px",
+                height: "48px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ArrowLeft size={24} />
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                showNext();
+              }}
+              style={{
+                position: "absolute",
+                right: "24px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                color: "white",
+                cursor: "pointer",
+                borderRadius: "50%",
+                width: "48px",
+                height: "48px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ArrowRight size={24} />
+            </button>
+
             <motion.div
               initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
